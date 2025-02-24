@@ -27,7 +27,7 @@ const Home = () => {
   );
   return (
     <div>
-      <Search />
+      <Search setSearch={setSearch} />
       <PokemonList />
     </div>
   );
