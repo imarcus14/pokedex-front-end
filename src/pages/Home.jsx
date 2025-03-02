@@ -11,6 +11,7 @@ const Home = () => {
   const [pokemon, setPokemon] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedPokemon, setSelectedPokemon] = useState(null);
+  const [usePixelArt, setUsePixelArt] = useState(false);
 
   const capitalizeFirstLetter = (name) =>
     name.charAt(0).toUpperCase() + name.slice(1);
@@ -72,7 +73,11 @@ const Home = () => {
 
       setSelectedPokemon({
         name,
-        image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`,
+        // image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`,
+        // image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
+        image: usePixelArt
+          ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
+          : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`,
         types,
         stats,
         moves,
@@ -95,12 +100,41 @@ const Home = () => {
   );
   return (
     <div className="flex flex-col">
-      <img src={title} alt="title" />
+      <div className="flex justify-center items-center">
+        <img className="h-50 w-200" src={title} alt="title" />
+      </div>
       <Search setSearch={setSearch} />
+      {/* <div className="flex justify-center mt-4">
+        <button
+          onClick={() => setUsePixelArt(!usePixelArt)}
+          className="px-4 py-2 bg-blue-500 text-white rounded"
+        >
+          {usePixelArt ? "Switch to Official Art" : "Switch to Pixel Art"}
+        </button>
+      </div> */}
+
+      <label className="absolute inline-flex justify-center items-center cursor-pointer mt-5 left-8">
+        <input
+          type="checkbox"
+          value=""
+          className="sr-only peer"
+          onClick={() => setUsePixelArt(!usePixelArt)}
+        />
+        <div className="relative w-11 h-6 bg-gray-400 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-200 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
+        <span
+          className={`ms-3 text-sm text-gray-900 dark:text-gray-300 ${
+            usePixelArt ? `font-[Jockey_One]` : `font-[Pixelify_Sans]`
+          }`}
+        >
+          {usePixelArt ? "Switch to Official Art" : "Switch to Pixel Art"}
+        </span>
+      </label>
+
       <PokemonList
         filteredPokemon={filteredPokemon}
         fetchPokemonDetails={fetchPokemonDetails}
         capitalizeFirstLetter={capitalizeFirstLetter}
+        usePixelArt={usePixelArt}
       />
 
       {selectedPokemon && (
@@ -108,6 +142,7 @@ const Home = () => {
           pokemon={selectedPokemon}
           onClose={closeModal}
           capitalizeFirstLetter={capitalizeFirstLetter}
+          usePixelArt={usePixelArt}
         />
       )}
     </div>

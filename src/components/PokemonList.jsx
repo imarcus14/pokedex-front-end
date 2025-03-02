@@ -4,6 +4,7 @@ const PokemonList = ({
   filteredPokemon,
   fetchPokemonDetails,
   capitalizeFirstLetter,
+  usePixelArt,
 }) => {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5 pt-10">
@@ -17,6 +18,7 @@ const PokemonList = ({
           <PokemonCard
             name={capitalizeFirstLetter(pokemon.name)}
             id={pokemon.id}
+            usePixelArt={usePixelArt}
           />
         </div>
       ))}

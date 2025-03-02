@@ -2,5 +2,8 @@
 
 
 body{
-  background-color: #ECECEC;
+  /* background-color: #ECECEC; */
+  background: url("./assets/photos/stone.jpg") no-repeat fixed;
+  background-size: cover;
+  
 }
